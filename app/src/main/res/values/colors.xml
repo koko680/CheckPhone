@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="bg_dark">#0D1117</color>
+    <color name="bg_card">#161B22</color>
+    <color name="text_primary">#C9D1D9</color>
+    <color name="text_secondary">#8B949E</color>
+    <color name="accent_blue">#58A6FF</color>
+    <color name="accent_green">#238636</color>
+    <color name="threat_safe">#2E7D32</color>
+    <color name="threat_warning">#F57F17</color>
+    <color name="threat_danger">#C62828</color>
+    <color name="threat_critical">#212121</color>
+</resources>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cardThreat"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="12dp"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="2dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/tvThreatLevel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="🔴 خطر"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:textColor="#C62828"
+            android:layout_marginBottom="6dp"/>
+
+        <TextView
+            android:id="@+id/tvThreatTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="عنوان التهديد"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:textColor="#1A1A1A"
+            android:layout_marginBottom="6dp"/>
+
+        <TextView
+            android:id="@+id/tvThreatDesc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="وصف التهديد"
+            android:textSize="13sp"
+            android:textColor="#555555"
+            android:lineSpacingMultiplier="1.4"/>
+
+        <TextView
+            android:id="@+id/tvThreatDetails"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text=""
+            android:textSize="12sp"
+            android:textColor="#666666"
+            android:lineSpacingMultiplier="1.5"
+            android:background="#11000000"
+            android:padding="10dp"
+            android:fontFamily="monospace"
+            android:visibility="gone"/>
+
+        <TextView
+            android:id="@+id/btnExpand"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="عرض التفاصيل ▼"
+            android:textSize="12sp"
+            android:textColor="#1565C0"
+            android:padding="4dp"/>
+
+    </LinearLayout>
+</androidx.cardview.widget.CardView>
