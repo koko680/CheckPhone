@@ -1,20 +1,11 @@
 package com.checkphone.model
 
 enum class ThreatLevel {
-    SAFE,       // 🟢
-    WARNING,    // 🟡
-    DANGER,     // 🔴
-    CRITICAL    // ⚫
+    SAFE, WARNING, DANGER, CRITICAL
 }
 
 enum class ThreatCategory {
-    SPYWARE,
-    PERMISSIONS,
-    NETWORK,
-    DEVICE_ADMIN,
-    ACCESSIBILITY,
-    UNKNOWN_APP,
-    SYSTEM
+    SPYWARE, PERMISSIONS, NETWORK, DEVICE_ADMIN, ACCESSIBILITY, UNKNOWN_APP, SYSTEM, BATTERY
 }
 
 data class Threat(
@@ -42,7 +33,6 @@ data class ScanResult(
                 else -> ThreatLevel.SAFE
             }
         }
-
         fun buildSummary(threats: List<Threat>): String {
             if (threats.isEmpty()) return "جهازك آمن — لم يتم اكتشاف أي تهديدات"
             val critical = threats.count { it.level == ThreatLevel.CRITICAL }
@@ -57,32 +47,58 @@ data class ScanResult(
     }
 }
 
-// Known spyware package names
 val KNOWN_SPYWARE_PACKAGES = setOf(
-    "com.flexispy",
-    "com.mspy",
-    "com.mobilespy",
-    "com.android.spyware",
-    "org.stalker",
-    "com.spy.phone",
-    "com.hoverwatch",
-    "com.spyera",
-    "com.familyorbit",
-    "com.finfisher",
-    "com.ahmyth.mine",
-    "com.droidjack"
+    "com.flexispy", "com.mspy", "com.mobilespy", "com.android.spyware",
+    "org.stalker", "com.spy.phone", "com.hoverwatch", "com.spyera",
+    "com.familyorbit", "com.finfisher", "com.ahmyth.mine", "com.droidjack",
+    "com.thetruthspy", "com.copy9", "com.ispyoo", "com.android.callrecorder.spy"
 )
 
-// Dangerous permission combinations
-val DANGEROUS_PERMISSION_COMBOS = listOf(
+// تطبيقات معروفة وآمنة - لا يتم الإبلاغ عنها
+val WHITELIST_PACKAGES = setOf(
+    "com.whatsapp", "com.whatsapp.w4b",
+    "com.facebook.katana", "com.facebook.lite", "com.facebook.orca",
+    "com.instagram.android",
+    "org.telegram.messenger", "org.telegram.messenger.web", "com.telegram.messenger",
+    "com.twitter.android", "com.twitter.android.lite",
+    "com.google.android.gm", "com.google.android.apps.maps",
+    "com.google.android.youtube", "com.google.android.apps.photos",
+    "com.google.android.apps.docs", "com.google.android.keep",
+    "com.microsoft.teams", "com.microsoft.office.word",
+    "com.netflix.mediaclient", "com.spotify.music",
+    "com.snapchat.android", "com.viber.voip", "com.skype.raider",
+    "com.tiktok", "com.zhiliaoapp.musically",
+    "com.amazon.mShop.android.shopping",
+    "com.ubercab", "com.careem",
+    // تطبيقات مصرية وإقليمية معروفة
+    "com.indriver.app", "com.indrive",
+    "com.waffarx", "com.waffarha",
+    "com.orange.egyptapp", "com.orange.android",
+    "com.vodafone.egypt", "com.etisalat.egypt",
+    "com.we.egyptapp",
+    "com.talabat", "com.otlob",
+    "com.instashop", "com.noon.buyerapp",
+    "com.souq.android",
+    "com.fawry.merchant", "com.fawry.customer",
+    "com.aman.wallet",
+    "com.banque.misr", "com.cib.egypt", "com.qnb.egypt",
+    "com.nbe.mobilebanking",
+    "air.com.gamedevltd.modernstrike",
+    "com.bigo.live", "sg.bigo.live",
+    "com.likee", "video.like",
+    "com.kwai.video", "com.snack.video"
+)
+
+// صلاحيات خطيرة - بس لو التطبيق مجهول
+val SUSPICIOUS_PERMISSION_COMBOS = listOf(
     Triple(
-        listOf("android.permission.RECORD_AUDIO", "android.permission.READ_CONTACTS"),
-        "تطبيق بيسجل صوتك ويقرأ جهات اتصالك",
-        ThreatLevel.DANGER
+        listOf("android.permission.RECORD_AUDIO", "android.permission.READ_CONTACTS", "android.permission.INTERNET"),
+        "تطبيق مجهول بيسجل صوتك ويرفع جهات اتصالك",
+        ThreatLevel.CRITICAL
     ),
     Triple(
-        listOf("android.permission.CAMERA", "android.permission.INTERNET", "android.permission.READ_CALL_LOG"),
-        "تطبيق بيستخدم الكاميرا ويرفع بياناتك على الإنترنت",
+        listOf("android.permission.CAMERA", "android.permission.RECORD_AUDIO", "android.permission.INTERNET", "android.permission.RECEIVE_BOOT_COMPLETED"),
+        "تطبيق مجهول بيستخدم الكاميرا والميكروفون ويرفع البيانات",
         ThreatLevel.CRITICAL
     ),
     Triple(
@@ -91,8 +107,18 @@ val DANGEROUS_PERMISSION_COMBOS = listOf(
         ThreatLevel.CRITICAL
     ),
     Triple(
-        listOf("android.permission.ACCESS_FINE_LOCATION", "android.permission.INTERNET", "android.permission.RECEIVE_BOOT_COMPLETED"),
-        "تطبيق بيتبع موقعك ويبدأ تلقائي مع الجهاز",
+        listOf("android.permission.READ_CALL_LOG", "android.permission.INTERNET", "android.permission.RECEIVE_BOOT_COMPLETED"),
+        "تطبيق بيسجل مكالماتك ويرفعها تلقائياً",
+        ThreatLevel.DANGER
+    ),
+    Triple(
+        listOf("android.permission.ACCESS_FINE_LOCATION", "android.permission.INTERNET", "android.permission.RECEIVE_BOOT_COMPLETED", "android.permission.HIDE_OVERLAY_WINDOWS"),
+        "تطبيق بيتبع موقعك ومخفي عن الشاشة",
+        ThreatLevel.DANGER
+    ),
+    Triple(
+        listOf("android.permission.READ_CONTACTS", "android.permission.READ_CALL_LOG", "android.permission.READ_SMS"),
+        "تطبيق بيقرأ كل بياناتك الشخصية",
         ThreatLevel.DANGER
     )
 )
