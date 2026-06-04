@@ -86,7 +86,27 @@ val WHITELIST_PACKAGES = setOf(
     "air.com.gamedevltd.modernstrike",
     "com.bigo.live", "sg.bigo.live",
     "com.likee", "video.like",
-    "com.kwai.video", "com.snack.video"
+    "com.kwai.video", "com.snack.video",
+    // AI Apps
+    "com.openai.chatgpt",
+    "com.anthropic.claude",
+    // Caller ID
+    "com.truecaller",
+    "com.hiya.star",
+    // Productivity
+    "com.adobe.reader",
+    "com.dropbox.android",
+    "com.evernote",
+    "com.todoist",
+    // Egyptian Apps extra
+    "com.etisalat.my",
+    "com.vodafone.vfgroup",
+    "com.ncb.mobilebanking",
+    "com.alexbank",
+    "com.aaib.mobilebanking",
+    "com.swvl.android",
+    "com.cartona.app",
+    "com.maxab.app"
 )
 
 // صلاحيات خطيرة - بس لو التطبيق مجهول
